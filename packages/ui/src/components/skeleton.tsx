@@ -1,0 +1,16 @@
+import { cn } from "@workspace/ui/lib/utils";
+
+function Skeleton({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn("animate-pulse rounded-md bg-accent", className)}
+      data-slot="skeleton"
+      {...props}
+    />
+  );
+}
+
+export { Skeleton };

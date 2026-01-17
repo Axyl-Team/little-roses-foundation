@@ -1,0 +1,38 @@
+{
+  "name": "@workspace/database",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts",
+    "./db/*": "./src/db/*.ts"
+  },
+  "scripts": {
+    "postinstall": "bun run scripts/postinstall.ts",
+    "db:generate": "bun run scripts/postinstall.ts",
+    "prebuild": "bun run scripts/postinstall.ts",
+    "db:push": "bun x drizzle-kit push",
+    "db:studio": "bun x drizzle-kit studio"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/pg": "^8.16.0",
+    "@workspace/typescript-config": "workspace:*",
+    "drizzle-kit": "^0.31.8",
+    "tsx": "^4.21.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@t3-oss/env-core": "^0.13.10",
+    "@workspace/utils": "workspace:*",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "pg": "^8.16.3",
+    "zod": "^4.3.5"
+  }
+}

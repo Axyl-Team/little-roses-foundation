@@ -1,0 +1,33 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "//#check": {},
+    "//#fix": {
+      "cache": false
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": ["NODE_ENV"]
+    },
+    "db:generate": {
+      "cache": false,
+      "inputs": ["src/**/*.ts", "drizzle.config.ts", ".env*"],
+      "outputs": ["drizzle/**"],
+      "env": ["DATABASE_URL", "SKIP_DB_GENERATE"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": ["^db:generate"]
+    }
+  }
+}
