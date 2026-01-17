@@ -6,11 +6,12 @@ import { CollectionArchive } from "@/components/CollectionArchive";
 import { Search } from "@/search/Component";
 import PageClient from "./page.client";
 
-type Args = {
+interface Args {
   searchParams: Promise<{
     q: string;
   }>;
-};
+}
+
 export default async function Page({
   searchParams: searchParamsPromise,
 }: Args) {

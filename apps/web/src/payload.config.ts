@@ -20,6 +20,10 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
+  // localization: {
+  //   defaultLocale: "vi",
+  //   locales: ["vi", "en"],
+  // },
   i18n: { fallbackLanguage: "vi", supportedLanguages: { en, vi } },
   admin: {
     components: {
@@ -27,10 +31,7 @@ export default buildConfig({
       // Feel free to delete this at any time. Simply remove the line below.
       beforeLogin: ["@/components/BeforeLogin"],
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Only show in development environment
-      ...(process.env.NODE_ENV === "development" && {
-        beforeDashboard: ["@/components/BeforeDashboard"],
-      }),
+      beforeDashboard: ["@/components/BeforeDashboard"],
     },
     importMap: {
       baseDir: path.resolve(dirname),
