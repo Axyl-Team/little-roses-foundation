@@ -12,22 +12,26 @@ const columnFields: Field[] = [
   {
     name: "size",
     type: "select",
+    label: {
+      en: "Size",
+      vi: "Kích thước",
+    },
     defaultValue: "oneThird",
     options: [
       {
-        label: "One Third",
+        label: { en: "One Third", vi: "Một phần ba" },
         value: "oneThird",
       },
       {
-        label: "Half",
+        label: { en: "Half", vi: "Một nửa" },
         value: "half",
       },
       {
-        label: "Two Thirds",
+        label: { en: "Two Thirds", vi: "Hai phần ba" },
         value: "twoThirds",
       },
       {
-        label: "Full",
+        label: { en: "Full", vi: "Đầy đủ" },
         value: "full",
       },
     ],
@@ -50,6 +54,10 @@ const columnFields: Field[] = [
   {
     name: "enableLink",
     type: "checkbox",
+    label: {
+      en: "Enable Link",
+      vi: "Bật liên kết",
+    },
   },
   link({
     overrides: {
@@ -65,10 +73,24 @@ const columnFields: Field[] = [
 export const Content: Block = {
   slug: "content",
   interfaceName: "ContentBlock",
+  labels: {
+    singular: {
+      en: "Content Block",
+      vi: "Khối nội dung",
+    },
+    plural: {
+      en: "Content Blocks",
+      vi: "Khối nội dung",
+    },
+  },
   fields: [
     {
       name: "columns",
       type: "array",
+      label: {
+        en: "Columns",
+        vi: "Cột",
+      },
       admin: {
         initCollapsed: true,
       },

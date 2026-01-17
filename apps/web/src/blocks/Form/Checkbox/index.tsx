@@ -9,7 +9,7 @@ import { useFormContext } from "react-hook-form";
 import { Checkbox as CheckboxUi } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
-import { Error } from "../Error";
+import { Error as ErrorComponent } from "../Error";
 import { Width } from "../Width";
 
 export const Checkbox: React.FC<
@@ -41,7 +41,7 @@ export const Checkbox: React.FC<
           {label}
         </Label>
       </div>
-      {errors[name] && <Error name={name} />}
+      {errors[name] && <ErrorComponent name={name} />}
     </Width>
   );
 };

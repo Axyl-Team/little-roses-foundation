@@ -21,6 +21,16 @@ import { revalidateDelete, revalidatePage } from "./hooks/revalidatePage";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
+  labels: {
+    singular: {
+      en: "Page",
+      vi: "Trang",
+    },
+    plural: {
+      en: "Pages",
+      vi: "Trang",
+    },
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -35,6 +45,7 @@ export const Pages: CollectionConfig<"pages"> = {
     slug: true,
   },
   admin: {
+    hidden: true, // Ẩn collection khỏi admin UI nhưng vẫn giữ trong config để tránh lỗi relation
     defaultColumns: ["title", "slug", "updatedAt"],
     livePreview: {
       url: ({ data, req }) =>
@@ -56,6 +67,10 @@ export const Pages: CollectionConfig<"pages"> = {
     {
       name: "title",
       type: "text",
+      label: {
+        en: "Title",
+        vi: "Tiêu đề",
+      },
       required: true,
     },
     {
@@ -63,13 +78,20 @@ export const Pages: CollectionConfig<"pages"> = {
       tabs: [
         {
           fields: [hero],
-          label: "Hero",
+          label: {
+            en: "Hero",
+            vi: "Hero",
+          },
         },
         {
           fields: [
             {
               name: "layout",
               type: "blocks",
+              label: {
+                en: "Layout",
+                vi: "Bố cục",
+              },
               blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
               required: true,
               admin: {
@@ -77,11 +99,17 @@ export const Pages: CollectionConfig<"pages"> = {
               },
             },
           ],
-          label: "Content",
+          label: {
+            en: "Content",
+            vi: "Nội dung",
+          },
         },
         {
           name: "meta",
-          label: "SEO",
+          label: {
+            en: "SEO",
+            vi: "SEO",
+          },
           fields: [
             OverviewField({
               titlePath: "meta.title",
@@ -111,6 +139,10 @@ export const Pages: CollectionConfig<"pages"> = {
     {
       name: "publishedAt",
       type: "date",
+      label: {
+        en: "Published At",
+        vi: "Ngày xuất bản",
+      },
       admin: {
         position: "sidebar",
       },

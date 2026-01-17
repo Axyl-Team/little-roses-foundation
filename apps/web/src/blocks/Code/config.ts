@@ -3,6 +3,16 @@ import type { Block } from "payload";
 export const Code: Block = {
   slug: "code",
   interfaceName: "CodeBlock",
+  labels: {
+    singular: {
+      en: "Code Block",
+      vi: "Khối mã",
+    },
+    plural: {
+      en: "Code Blocks",
+      vi: "Khối mã",
+    },
+  },
   fields: [
     {
       name: "language",
@@ -10,15 +20,15 @@ export const Code: Block = {
       defaultValue: "typescript",
       options: [
         {
-          label: "Typescript",
+          label: { en: "Typescript", vi: "Typescript" },
           value: "typescript",
         },
         {
-          label: "Javascript",
+          label: { en: "Javascript", vi: "Javascript" },
           value: "javascript",
         },
         {
-          label: "CSS",
+          label: { en: "CSS", vi: "CSS" },
           value: "css",
         },
       ],

@@ -6,14 +6,14 @@ export type LinkAppearances = "default" | "outline";
 
 export const appearanceOptions: Record<
   LinkAppearances,
-  { label: string; value: string }
+  { label: { en: string; vi: string }; value: string }
 > = {
   default: {
-    label: "Default",
+    label: { en: "Default", vi: "Mặc định" },
     value: "default",
   },
   outline: {
-    label: "Outline",
+    label: { en: "Outline", vi: "Viền" },
     value: "outline",
   },
 };
@@ -49,11 +49,11 @@ export const link: LinkType = ({
             defaultValue: "reference",
             options: [
               {
-                label: "Internal link",
+                label: { en: "Internal link", vi: "Liên kết nội bộ" },
                 value: "reference",
               },
               {
-                label: "Custom URL",
+                label: { en: "Custom URL", vi: "URL tùy chỉnh" },
                 value: "custom",
               },
             ],
@@ -67,7 +67,10 @@ export const link: LinkType = ({
               },
               width: "50%",
             },
-            label: "Open in new tab",
+            label: {
+              en: "Open in new tab",
+              vi: "Mở trong tab mới",
+            },
           },
         ],
       },
@@ -81,7 +84,10 @@ export const link: LinkType = ({
       admin: {
         condition: (_, siblingData) => siblingData?.type === "reference",
       },
-      label: "Document to link to",
+      label: {
+        en: "Document to link to",
+        vi: "Tài liệu để liên kết",
+      },
       relationTo: ["pages", "posts"],
       required: true,
     },
@@ -91,7 +97,10 @@ export const link: LinkType = ({
       admin: {
         condition: (_, siblingData) => siblingData?.type === "custom",
       },
-      label: "Custom URL",
+      label: {
+        en: "Custom URL",
+        vi: "URL tùy chỉnh",
+      },
       required: true,
     },
   ];
@@ -117,7 +126,10 @@ export const link: LinkType = ({
           admin: {
             width: "50%",
           },
-          label: "Label",
+          label: {
+            en: "Label",
+            vi: "Nhãn",
+          },
           required: true,
         },
       ],
@@ -140,7 +152,10 @@ export const link: LinkType = ({
       name: "appearance",
       type: "select",
       admin: {
-        description: "Choose how the link should be rendered.",
+        description: {
+          en: "Choose how the link should be rendered.",
+          vi: "Chọn cách hiển thị liên kết.",
+        },
       },
       defaultValue: "default",
       options: appearanceOptionsToUse,

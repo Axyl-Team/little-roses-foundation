@@ -5,6 +5,16 @@ import { authenticated } from "../access/authenticated";
 
 export const Categories: CollectionConfig = {
   slug: "categories",
+  labels: {
+    singular: {
+      en: "Category",
+      vi: "Danh mục",
+    },
+    plural: {
+      en: "Categories",
+      vi: "Danh mục",
+    },
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -18,6 +28,10 @@ export const Categories: CollectionConfig = {
     {
       name: "title",
       type: "text",
+      label: {
+        en: "Title",
+        vi: "Tiêu đề",
+      },
       required: true,
     },
     slugField({

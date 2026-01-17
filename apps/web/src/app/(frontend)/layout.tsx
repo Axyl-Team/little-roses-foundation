@@ -42,7 +42,7 @@ export default async function RootLayout({
           />
 
           <Header />
-          {children}
+          <div className="container mx-auto">{children}</div>
           <Footer />
         </Providers>
       </body>

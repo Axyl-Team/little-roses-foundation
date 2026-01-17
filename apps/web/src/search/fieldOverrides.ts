@@ -11,7 +11,10 @@ export const searchFields: Field[] = [
   },
   {
     name: "meta",
-    label: "Meta",
+    label: {
+      en: "Meta",
+      vi: "Siêu dữ liệu",
+    },
     type: "group",
     index: true,
     admin: {
@@ -21,23 +24,35 @@ export const searchFields: Field[] = [
       {
         type: "text",
         name: "title",
-        label: "Title",
+        label: {
+          en: "Title",
+          vi: "Tiêu đề",
+        },
       },
       {
         type: "text",
         name: "description",
-        label: "Description",
+        label: {
+          en: "Description",
+          vi: "Mô tả",
+        },
       },
       {
         name: "image",
-        label: "Image",
+        label: {
+          en: "Image",
+          vi: "Hình ảnh",
+        },
         type: "upload",
         relationTo: "media",
       },
     ],
   },
   {
-    label: "Categories",
+    label: {
+      en: "Categories",
+      vi: "Danh mục",
+    },
     name: "categories",
     type: "array",
     admin: {

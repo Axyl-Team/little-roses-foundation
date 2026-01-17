@@ -4,7 +4,14 @@ import { link } from "@/fields/link";
 import { revalidateFooter } from "./hooks/revalidateFooter";
 
 export const Footer: GlobalConfig = {
+  admin: {
+    hidden: true,
+  },
   slug: "footer",
+  label: {
+    en: "Footer",
+    vi: "Chân trang",
+  },
   access: {
     read: () => true,
   },

@@ -16,22 +16,25 @@ export const hero: Field = {
       name: "type",
       type: "select",
       defaultValue: "lowImpact",
-      label: "Type",
+      label: {
+        en: "Type",
+        vi: "Loại",
+      },
       options: [
         {
-          label: "None",
+          label: { en: "None", vi: "Không có" },
           value: "none",
         },
         {
-          label: "High Impact",
+          label: { en: "High Impact", vi: "Tác động cao" },
           value: "highImpact",
         },
         {
-          label: "Medium Impact",
+          label: { en: "Medium Impact", vi: "Tác động trung bình" },
           value: "mediumImpact",
         },
         {
-          label: "Low Impact",
+          label: { en: "Low Impact", vi: "Tác động thấp" },
           value: "lowImpact",
         },
       ],
@@ -60,6 +63,10 @@ export const hero: Field = {
     {
       name: "media",
       type: "upload",
+      label: {
+        en: "Media",
+        vi: "Phương tiện",
+      },
       admin: {
         condition: (_, { type } = {}) =>
           ["highImpact", "mediumImpact"].includes(type),

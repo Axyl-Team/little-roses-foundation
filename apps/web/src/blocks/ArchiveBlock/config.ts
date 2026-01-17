@@ -23,7 +23,10 @@ export const Archive: Block = {
           ];
         },
       }),
-      label: "Intro Content",
+      label: {
+        en: "Intro Content",
+        vi: "Nội dung giới thiệu",
+      },
     },
     {
       name: "populateBy",
@@ -31,11 +34,11 @@ export const Archive: Block = {
       defaultValue: "collection",
       options: [
         {
-          label: "Collection",
+          label: { en: "Collection", vi: "Bộ sưu tập" },
           value: "collection",
         },
         {
-          label: "Individual Selection",
+          label: { en: "Individual Selection", vi: "Lựa chọn riêng lẻ" },
           value: "selection",
         },
       ],
@@ -47,10 +50,13 @@ export const Archive: Block = {
         condition: (_, siblingData) => siblingData.populateBy === "collection",
       },
       defaultValue: "posts",
-      label: "Collections To Show",
+      label: {
+        en: "Collections To Show",
+        vi: "Bộ sưu tập hiển thị",
+      },
       options: [
         {
-          label: "Posts",
+          label: { en: "Posts", vi: "Bài viết" },
           value: "posts",
         },
       ],
@@ -62,7 +68,10 @@ export const Archive: Block = {
         condition: (_, siblingData) => siblingData.populateBy === "collection",
       },
       hasMany: true,
-      label: "Categories To Show",
+      label: {
+        en: "Categories To Show",
+        vi: "Danh mục hiển thị",
+      },
       relationTo: "categories",
     },
     {
@@ -73,7 +82,10 @@ export const Archive: Block = {
         step: 1,
       },
       defaultValue: 10,
-      label: "Limit",
+      label: {
+        en: "Limit",
+        vi: "Giới hạn",
+      },
     },
     {
       name: "selectedDocs",
@@ -82,12 +94,21 @@ export const Archive: Block = {
         condition: (_, siblingData) => siblingData.populateBy === "selection",
       },
       hasMany: true,
-      label: "Selection",
+      label: {
+        en: "Selection",
+        vi: "Lựa chọn",
+      },
       relationTo: ["posts"],
     },
   ],
   labels: {
-    plural: "Archives",
-    singular: "Archive",
+    singular: {
+      en: "Archive",
+      vi: "Lưu trữ",
+    },
+    plural: {
+      en: "Archives",
+      vi: "Lưu trữ",
+    },
   },
 };

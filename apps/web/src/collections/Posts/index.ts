@@ -27,6 +27,16 @@ import { revalidateDelete, revalidatePost } from "./hooks/revalidatePost";
 
 export const Posts: CollectionConfig<"posts"> = {
   slug: "posts",
+  labels: {
+    singular: {
+      en: "Post",
+      vi: "Bài viết",
+    },
+    plural: {
+      en: "Posts",
+      vi: "Bài viết",
+    },
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -67,6 +77,10 @@ export const Posts: CollectionConfig<"posts"> = {
     {
       name: "title",
       type: "text",
+      label: {
+        en: "Title",
+        vi: "Tiêu đề",
+      },
       required: true,
     },
     {
@@ -77,6 +91,10 @@ export const Posts: CollectionConfig<"posts"> = {
             {
               name: "heroImage",
               type: "upload",
+              label: {
+                en: "Hero Image",
+                vi: "Hình ảnh hero",
+              },
               relationTo: "media",
             },
             {
@@ -100,13 +118,20 @@ export const Posts: CollectionConfig<"posts"> = {
               required: true,
             },
           ],
-          label: "Content",
+          label: {
+            en: "Content",
+            vi: "Nội dung",
+          },
         },
         {
           fields: [
             {
               name: "relatedPosts",
               type: "relationship",
+              label: {
+                en: "Related Posts",
+                vi: "Bài viết liên quan",
+              },
               admin: {
                 position: "sidebar",
               },
@@ -123,6 +148,10 @@ export const Posts: CollectionConfig<"posts"> = {
             {
               name: "categories",
               type: "relationship",
+              label: {
+                en: "Categories",
+                vi: "Danh mục",
+              },
               admin: {
                 position: "sidebar",
               },
@@ -130,11 +159,17 @@ export const Posts: CollectionConfig<"posts"> = {
               relationTo: "categories",
             },
           ],
-          label: "Meta",
+          label: {
+            en: "Meta",
+            vi: "Siêu dữ liệu",
+          },
         },
         {
           name: "meta",
-          label: "SEO",
+          label: {
+            en: "SEO",
+            vi: "SEO",
+          },
           fields: [
             OverviewField({
               titlePath: "meta.title",
@@ -164,6 +199,10 @@ export const Posts: CollectionConfig<"posts"> = {
     {
       name: "publishedAt",
       type: "date",
+      label: {
+        en: "Published At",
+        vi: "Ngày xuất bản",
+      },
       admin: {
         date: {
           pickerAppearance: "dayAndTime",
@@ -184,6 +223,10 @@ export const Posts: CollectionConfig<"posts"> = {
     {
       name: "authors",
       type: "relationship",
+      label: {
+        en: "Authors",
+        vi: "Tác giả",
+      },
       admin: {
         position: "sidebar",
       },

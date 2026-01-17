@@ -4,7 +4,14 @@ import { link } from "@/fields/link";
 import { revalidateHeader } from "./hooks/revalidateHeader";
 
 export const Header: GlobalConfig = {
+  admin: {
+    hidden: true,
+  },
   slug: "header",
+  label: {
+    en: "Header",
+    vi: "Đầu trang",
+  },
   access: {
     read: () => true,
   },
