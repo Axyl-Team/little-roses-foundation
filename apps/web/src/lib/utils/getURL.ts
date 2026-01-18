@@ -1,10 +1,11 @@
+import { env } from "@/env";
 import canUseDOM from "./canUseDOM";
 
 export const getServerSideURL = () => {
   return (
-    process.env.NEXT_PUBLIC_SERVER_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    env.NEXT_PUBLIC_SERVER_URL ||
+    (env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`
       : "http://localhost:3000")
   );
 };
@@ -18,9 +19,6 @@ export const getClientSideURL = () => {
     return `${protocol}//${domain}${port ? `:${port}` : ""}`;
   }
 
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  }
-
-  return process.env.NEXT_PUBLIC_SERVER_URL || "";
+  // Server-side fallback - only use NEXT_PUBLIC_* vars
+  return env.NEXT_PUBLIC_SERVER_URL || "";
 };

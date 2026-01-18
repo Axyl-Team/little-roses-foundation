@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import type { NextRequest } from "next/server";
 import type { CollectionSlug, PayloadRequest } from "payload";
 import { getPayload } from "payload";
+import { env } from "@/env";
 
 export async function GET(req: NextRequest): Promise<Response> {
   const payload = await getPayload({ config: configPromise });
@@ -15,7 +16,7 @@ export async function GET(req: NextRequest): Promise<Response> {
   const slug = searchParams.get("slug");
   const previewSecret = searchParams.get("previewSecret");
 
-  if (previewSecret !== process.env.PREVIEW_SECRET) {
+  if (previewSecret !== env.PREVIEW_SECRET) {
     return new Response("You are not allowed to preview this page", {
       status: 403,
     });

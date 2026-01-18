@@ -5,6 +5,7 @@ import { en } from "@payloadcms/translations/languages/en";
 import { vi } from "@payloadcms/translations/languages/vi";
 import { buildConfig, type PayloadRequest } from "payload";
 import sharp from "sharp";
+import { env } from "@/env";
 import { getServerSideURL } from "@/lib/utils/getURL";
 import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
@@ -65,7 +66,7 @@ export default buildConfig({
   editor: defaultLexical,
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || "",
+      connectionString: env.DATABASE_URL,
     },
     push: false,
     migrationDir: path.resolve(dirname, "..", "migrations"),
@@ -74,7 +75,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins,
-  secret: process.env.PAYLOAD_SECRET,
+  secret: env.PAYLOAD_SECRET,
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, "..", "payload-types.ts"),
@@ -87,7 +88,7 @@ export default buildConfig({
           return true;
         }
 
-        const secret = process.env.CRON_SECRET;
+        const secret = env.CRON_SECRET;
         if (!secret) {
           return false;
         }

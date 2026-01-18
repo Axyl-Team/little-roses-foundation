@@ -23,12 +23,27 @@ src/
 ├── app/
 │   ├── (frontend)/          # Frontend routes
 │   └── (payload)/           # Payload admin routes
-├── collections/             # Collection configs
-├── globals/                 # Global configs
-├── components/              # Custom React components
-├── hooks/                   # Hook functions
-├── access/                  # Access control functions
-└── payload.config.ts        # Main config
+├── payload/                  # Payload CMS configuration
+│   ├── collections/         # Collection configs
+│   ├── blocks/              # Block configs and components
+│   ├── fields/               # Custom field definitions
+│   ├── access/               # Access control functions
+│   ├── endpoints/            # Custom API endpoints
+│   ├── plugins/              # Payload plugins
+│   ├── search/               # Search configuration
+│   ├── globals/              # Global configs (Header, Footer)
+│   ├── hooks/                 # Payload collection hooks
+│   └── config.ts             # Main Payload config
+├── lib/                      # Shared libraries
+│   ├── utils/                # Utility functions
+│   └── hooks/                 # React hooks
+├── components/               # Frontend React components
+│   ├── admin/                # Payload admin components
+│   ├── heroes/               # Hero components
+│   └── ui/                   # UI components
+├── providers/                # React providers
+├── i18n/                     # i18n configuration
+└── payload.config.ts         # Re-export from payload/config.ts
 ```
 
 ## Configuration
