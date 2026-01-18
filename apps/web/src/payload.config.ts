@@ -20,10 +20,11 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
-  // localization: {
-  //   defaultLocale: "vi",
-  //   locales: ["vi", "en"],
-  // },
+  localization: {
+    locales: ["en", "vi"],
+    defaultLocale: "vi",
+    fallback: true,
+  },
   i18n: { fallbackLanguage: "vi", supportedLanguages: { en, vi } },
   admin: {
     components: {

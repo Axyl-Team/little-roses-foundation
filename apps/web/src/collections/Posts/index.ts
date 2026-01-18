@@ -77,6 +77,7 @@ export const Posts: CollectionConfig<"posts"> = {
     {
       name: "title",
       type: "text",
+      localized: true,
       label: {
         en: "Title",
         vi: "Tiêu đề",
@@ -99,6 +100,7 @@ export const Posts: CollectionConfig<"posts"> = {
             },
             {
               name: "content",
+              localized: true,
               type: "richText",
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
@@ -166,6 +168,7 @@ export const Posts: CollectionConfig<"posts"> = {
         },
         {
           name: "meta",
+          localized: true,
           label: {
             en: "SEO",
             vi: "SEO",

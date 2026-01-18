@@ -12,9 +12,9 @@ import { home } from "./home";
 import { image1 } from "./image-1";
 import { image2 } from "./image-2";
 import { imageHero1 } from "./image-hero-1";
-import { post1 } from "./post-1";
-import { post2 } from "./post-2";
-import { post3 } from "./post-3";
+import { post1, post1En } from "./post-1";
+import { post2, post2En } from "./post-2";
+import { post3, post3En } from "./post-3";
 
 const collections: CollectionSlug[] = [
   "categories",
@@ -196,6 +196,49 @@ export const seed = async ({
       disableRevalidate: true,
     },
     data: post3({
+      heroImage: image3Doc,
+      blockImage: image1Doc,
+      author: demoAuthor,
+    }),
+  });
+
+  // Update posts with English locale translations
+  await payload.update({
+    id: post1Doc.id,
+    collection: "posts",
+    locale: "en",
+    context: {
+      disableRevalidate: true,
+    },
+    data: post1En({
+      heroImage: image1Doc,
+      blockImage: image2Doc,
+      author: demoAuthor,
+    }),
+  });
+
+  await payload.update({
+    id: post2Doc.id,
+    collection: "posts",
+    locale: "en",
+    context: {
+      disableRevalidate: true,
+    },
+    data: post2En({
+      heroImage: image2Doc,
+      blockImage: image3Doc,
+      author: demoAuthor,
+    }),
+  });
+
+  await payload.update({
+    id: post3Doc.id,
+    collection: "posts",
+    locale: "en",
+    context: {
+      disableRevalidate: true,
+    },
+    data: post3En({
       heroImage: image3Doc,
       blockImage: image1Doc,
       author: demoAuthor,
