@@ -1,11 +1,11 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   FixedToolbarFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
-import path from "path";
 import type { CollectionConfig } from "payload";
-import { fileURLToPath } from "url";
 
 import { anyone } from "../access/anyone";
 import { authenticated } from "../access/authenticated";
@@ -62,7 +62,7 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
-    staticDir: path.resolve(dirname, "../../public/media"),
+    staticDir: path.resolve(dirname, "../../../public/media"),
     adminThumbnail: "thumbnail",
     focalPoint: true,
     imageSizes: [
