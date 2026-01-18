@@ -4,6 +4,7 @@ import type {
   GlobalSlug,
   Payload,
   PayloadRequest,
+  RequiredDataFromCollectionSlug,
 } from "payload";
 
 import { contactForm as contactFormData } from "./contact-form";
@@ -214,7 +215,7 @@ export const seed = async ({
       heroImage: image1Doc,
       blockImage: image2Doc,
       author: demoAuthor,
-    }),
+    }) as Partial<RequiredDataFromCollectionSlug<"posts">>,
   });
 
   await payload.update({
@@ -228,7 +229,7 @@ export const seed = async ({
       heroImage: image2Doc,
       blockImage: image3Doc,
       author: demoAuthor,
-    }),
+    }) as Partial<RequiredDataFromCollectionSlug<"posts">>,
   });
 
   await payload.update({
@@ -242,7 +243,7 @@ export const seed = async ({
       heroImage: image3Doc,
       blockImage: image1Doc,
       author: demoAuthor,
-    }),
+    }) as Partial<RequiredDataFromCollectionSlug<"posts">>,
   });
 
   // update each post with related posts

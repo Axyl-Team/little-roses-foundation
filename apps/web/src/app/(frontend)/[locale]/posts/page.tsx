@@ -9,10 +9,16 @@ import PageClient from "./page.client";
 export const dynamic = "force-static";
 export const revalidate = 600;
 
-export default async function Page() {
+interface Props {
+  params: Promise<{ locale: "en" | "vi" }>;
+}
+
+export default async function Page({ params }: Props) {
+  const { locale } = await params;
   const payload = await getPayload({ config: configPromise });
 
   const posts = await payload.find({
+    locale,
     collection: "posts",
     depth: 1,
     limit: 12,
