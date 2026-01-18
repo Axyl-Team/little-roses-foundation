@@ -3,13 +3,12 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { getPayload } from "payload";
 import { cache } from "react";
-import { RelatedPosts } from "@/blocks/RelatedPosts/Component";
+import { PostHero } from "@/components/heroes/PostHero";
 import { LivePreviewListener } from "@/components/LivePreviewListener";
 import { PayloadRedirects } from "@/components/PayloadRedirects";
 import RichText from "@/components/RichText";
-
-import { PostHero } from "@/heros/PostHero";
-import { generateMeta } from "@/utilities/generateMeta";
+import { generateMeta } from "@/lib/utils/generateMeta";
+import { RelatedPosts } from "@/payload/blocks/RelatedPosts/Component";
 import PageClient from "./page.client";
 
 export async function generateStaticParams() {

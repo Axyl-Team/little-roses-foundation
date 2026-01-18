@@ -1,10 +1,10 @@
 import Link from "next/link";
 import type React from "react";
 import { Button, type ButtonProps } from "@/components/ui/button";
+import { cn } from "@/lib/utils/ui";
 import type { Page, Post } from "@/payload-types";
-import { cn } from "@/utilities/ui";
 
-type CMSLinkType = {
+interface CMSLinkType {
   appearance?: "inline" | ButtonProps["variant"];
   children?: React.ReactNode;
   className?: string;
@@ -17,7 +17,7 @@ type CMSLinkType = {
   size?: ButtonProps["size"] | null;
   type?: "custom" | "reference" | null;
   url?: string | null;
-};
+}
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const {
@@ -41,7 +41,9 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         }`
       : url;
 
-  if (!href) return null;
+  if (!href) {
+    return null;
+  }
 
   const size = appearance === "link" ? "clear" : sizeFromProps;
   const newTabProps = newTab

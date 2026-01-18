@@ -10,7 +10,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useRouter } from "@/i18n/navigation";
-import { cn } from "@/utilities/ui";
+import { cn } from "@/lib/utils/ui";
 
 export const Pagination: React.FC<{
   className?: string;

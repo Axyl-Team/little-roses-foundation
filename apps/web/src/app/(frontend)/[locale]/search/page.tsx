@@ -3,7 +3,7 @@ import type { Metadata } from "next/types";
 import { getPayload } from "payload";
 import type { CardPostData } from "@/components/Card";
 import { CollectionArchive } from "@/components/CollectionArchive";
-import { Search } from "@/search/Component";
+import { Search } from "@/payload/search/Component";
 import PageClient from "./page.client";
 
 interface Args {

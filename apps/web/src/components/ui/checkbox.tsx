@@ -3,7 +3,7 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { Check } from "lucide-react";
 import type * as React from "react";
-import { cn } from "@/utilities/ui";
+import { cn } from "@/lib/utils/ui";
 
 const Checkbox: React.FC<
   {

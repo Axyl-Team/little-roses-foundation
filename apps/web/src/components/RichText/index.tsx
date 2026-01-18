@@ -9,16 +9,19 @@ import {
   type JSXConvertersFunction,
   LinkJSXConverter,
 } from "@payloadcms/richtext-lexical/react";
-import { BannerBlock } from "@/blocks/Banner/Component";
-import { CallToActionBlock } from "@/blocks/CallToAction/Component";
-import { CodeBlock, type CodeBlockProps } from "@/blocks/Code/Component";
-import { MediaBlock } from "@/blocks/MediaBlock/Component";
+import { cn } from "@/lib/utils/ui";
+import { BannerBlock } from "@/payload/blocks/Banner/Component";
+import { CallToActionBlock } from "@/payload/blocks/CallToAction/Component";
+import {
+  CodeBlock,
+  type CodeBlockProps,
+} from "@/payload/blocks/Code/Component";
+import { MediaBlock } from "@/payload/blocks/MediaBlock/Component";
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from "@/payload-types";
-import { cn } from "@/utilities/ui";
 
 type NodeTypes =
   | DefaultNodeTypes

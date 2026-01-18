@@ -3,9 +3,9 @@ import Link from "next/link";
 import type React from "react";
 import { Fragment } from "react";
 import { Media } from "@/components/Media";
+import useClickableCard from "@/lib/hooks/useClickableCard";
+import { cn } from "@/lib/utils/ui";
 import type { Post } from "@/payload-types";
-import { cn } from "@/utilities/ui";
-import useClickableCard from "@/utilities/useClickableCard";
 
 export type CardPostData = Pick<Post, "slug" | "categories" | "meta" | "title">;
 

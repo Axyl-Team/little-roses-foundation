@@ -1,6 +1,6 @@
 import type React from "react";
 import { Card, type CardPostData } from "@/components/Card";
-import { cn } from "@/utilities/ui";
+import { cn } from "@/lib/utils/ui";
 
 export type Props = {
   posts: CardPostData[];

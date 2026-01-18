@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { createContext, use, useCallback, useEffect, useState } from "react";
-import canUseDOM from "@/utilities/canUseDOM";
+import canUseDOM from "@/lib/utils/canUseDOM";
 import {
   defaultTheme,
   getImplicitPreference,

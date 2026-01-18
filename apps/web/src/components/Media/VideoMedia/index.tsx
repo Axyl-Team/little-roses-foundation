@@ -2,8 +2,8 @@
 
 import type React from "react";
 import { useEffect, useRef } from "react";
-import { getMediaUrl } from "@/utilities/getMediaUrl";
-import { cn } from "@/utilities/ui";
+import { getMediaUrl } from "@/lib/utils/getMediaUrl";
+import { cn } from "@/lib/utils/ui";
 import type { Props as MediaProps } from "../types";
 
 export const VideoMedia: React.FC<MediaProps> = (props) => {
