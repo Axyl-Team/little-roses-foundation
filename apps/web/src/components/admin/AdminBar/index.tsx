@@ -41,7 +41,7 @@ export const AdminBar: React.FC<{
   const collection = (
     collectionLabels[segments?.[1] as keyof typeof collectionLabels]
       ? segments[1]
-      : "pages"
+      : "posts"
   ) as keyof typeof collectionLabels;
   const router = useRouter();
 
@@ -56,7 +56,7 @@ export const AdminBar: React.FC<{
         hidden: !show,
       })}
     >
-      <div className="container">
+      <div className="container mx-auto">
         <PayloadAdminBar
           {...adminBarProps}
           className="py-2 text-white"

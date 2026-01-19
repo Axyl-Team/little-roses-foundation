@@ -7,8 +7,6 @@ import type React from "react";
 import { AdminBar } from "@/components/admin/AdminBar";
 import { mergeOpenGraph } from "@/lib/utils/mergeOpenGraph";
 import { cn } from "@/lib/utils/ui";
-import { Footer } from "@/payload/globals/Footer/Component";
-import { Header } from "@/payload/globals/Header/Component";
 import { Providers } from "@/providers";
 import { InitTheme } from "@/providers/Theme/InitTheme";
 
@@ -41,9 +39,7 @@ export default async function RootLayout({
             }}
           />
 
-          <Header />
           <div className="container mx-auto">{children}</div>
-          <Footer />
         </Providers>
       </body>
     </html>
