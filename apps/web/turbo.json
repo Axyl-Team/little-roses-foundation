@@ -1,0 +1,67 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "env": [
+        "DATABASE_URL",
+        "PAYLOAD_SECRET",
+        "CRON_SECRET",
+        "PREVIEW_SECRET",
+        "VERCEL_PROJECT_PRODUCTION_URL",
+        "NEXT_PUBLIC_SERVER_URL",
+        "NODE_ENV"
+      ]
+    },
+    "dev": {
+      "env": [
+        "DATABASE_URL",
+        "PAYLOAD_SECRET",
+        "CRON_SECRET",
+        "PREVIEW_SECRET",
+        "VERCEL_PROJECT_PRODUCTION_URL",
+        "NEXT_PUBLIC_SERVER_URL",
+        "NODE_ENV"
+      ]
+    },
+    "start": {
+      "env": [
+        "DATABASE_URL",
+        "PAYLOAD_SECRET",
+        "CRON_SECRET",
+        "PREVIEW_SECRET",
+        "VERCEL_PROJECT_PRODUCTION_URL",
+        "NEXT_PUBLIC_SERVER_URL",
+        "NODE_ENV"
+      ]
+    },
+    "migrate": {
+      "cache": false,
+      "env": ["DATABASE_URL", "PAYLOAD_SECRET", "NODE_ENV"]
+    },
+    "migrate:create": {
+      "cache": false,
+      "env": ["DATABASE_URL", "PAYLOAD_SECRET", "NODE_ENV"]
+    },
+    "generate:types": {
+      "cache": false,
+      "env": ["DATABASE_URL", "PAYLOAD_SECRET", "NODE_ENV"]
+    },
+    "generate:importmap": {
+      "cache": false,
+      "env": ["DATABASE_URL", "PAYLOAD_SECRET", "NODE_ENV"]
+    },
+    "payload": {
+      "cache": false,
+      "env": [
+        "DATABASE_URL",
+        "PAYLOAD_SECRET",
+        "CRON_SECRET",
+        "PREVIEW_SECRET",
+        "VERCEL_PROJECT_PRODUCTION_URL",
+        "NEXT_PUBLIC_SERVER_URL",
+        "NODE_ENV"
+      ]
+    }
+  }
+}
