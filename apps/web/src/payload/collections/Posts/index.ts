@@ -5,7 +5,6 @@ import {
   OverviewField,
   PreviewField,
 } from "@payloadcms/plugin-seo/fields";
-
 import {
   BlocksFeature,
   FixedToolbarFeature,
