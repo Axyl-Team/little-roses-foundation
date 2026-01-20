@@ -1,4 +1,6 @@
 import type { CheckboxField } from "@payloadcms/plugin-form-builder/types";
+import { Checkbox as CheckboxUi } from "@workspace/ui/components/checkbox";
+import { Label } from "@workspace/ui/components/label";
 import type React from "react";
 import type {
   FieldErrorsImpl,
@@ -6,8 +8,6 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 import { useFormContext } from "react-hook-form";
-import { Checkbox as CheckboxUi } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 
 import { Error as ErrorComponent } from "../Error";
 import { Width } from "../Width";

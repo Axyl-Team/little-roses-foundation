@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import type React from "react";
 import { Fragment } from "react";
@@ -66,7 +67,7 @@ export const Card: React.FC<{
                     return (
                       <Fragment key={index}>
                         {categoryTitle}
-                        {!isLast && <Fragment>, &nbsp;</Fragment>}
+                        {!isLast && <>, &nbsp;</>}
                       </Fragment>
                     );
                   }

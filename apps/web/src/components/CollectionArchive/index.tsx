@@ -2,9 +2,9 @@ import type React from "react";
 import { Card, type CardPostData } from "@/components/Card";
 import { cn } from "@/lib/utils/ui";
 
-export type Props = {
+export interface Props {
   posts: CardPostData[];
-};
+}
 
 export const CollectionArchive: React.FC<Props> = (props) => {
   const { posts } = props;

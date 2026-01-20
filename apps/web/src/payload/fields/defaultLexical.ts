@@ -19,7 +19,9 @@ export const defaultLexical = lexicalEditor({
       enabledCollections: ["pages", "posts"],
       fields: ({ defaultFields }) => {
         const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-          if ("name" in field && field.name === "url") return false;
+          if ("name" in field && field.name === "url") {
+            return false;
+          }
           return true;
         });
 

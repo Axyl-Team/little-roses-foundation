@@ -30,7 +30,7 @@ export const PostHero: React.FC<{
                 return (
                   <React.Fragment key={index}>
                     {titleToUse}
-                    {!isLast && <React.Fragment>, &nbsp;</React.Fragment>}
+                    {!isLast && <>, &nbsp;</>}
                   </React.Fragment>
                 );
               }

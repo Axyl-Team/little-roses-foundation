@@ -4,12 +4,12 @@ import type {
   Form as FormType,
 } from "@payloadcms/plugin-form-builder/types";
 import type { DefaultTypedEditorState } from "@payloadcms/richtext-lexical";
+import { Button } from "@workspace/ui/components/button";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import RichText from "@/components/RichText";
-import { Button } from "@/components/ui/button";
 import { getClientSideURL } from "@/lib/utils/getURL";
 import { fields } from "./fields";
 

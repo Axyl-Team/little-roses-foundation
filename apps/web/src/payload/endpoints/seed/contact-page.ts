@@ -1,9 +1,9 @@
 import type { RequiredDataFromCollectionSlug } from "payload";
 import type { Form } from "@/payload-types";
 
-type ContactArgs = {
+interface ContactArgs {
   contactForm: Form;
-};
+}
 
 export const contact: (
   args: ContactArgs

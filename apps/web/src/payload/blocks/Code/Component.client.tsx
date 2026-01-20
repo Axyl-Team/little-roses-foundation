@@ -1,15 +1,18 @@
 "use client";
+
 import { Highlight, themes } from "prism-react-renderer";
 import type React from "react";
 import { CopyButton } from "./CopyButton";
 
-type Props = {
+interface Props {
   code: string;
   language?: string;
-};
+}
 
 export const Code: React.FC<Props> = ({ code, language = "" }) => {
-  if (!code) return null;
+  if (!code) {
+    return null;
+  }
 
   return (
     <Highlight code={code} language={language} theme={themes.vsDark}>

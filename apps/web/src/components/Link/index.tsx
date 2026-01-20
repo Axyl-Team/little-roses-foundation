@@ -1,8 +1,12 @@
+import type { buttonVariants } from "@workspace/ui/components/button";
+import { Button } from "@workspace/ui/components/button";
+import type { VariantProps } from "class-variance-authority";
 import Link from "next/link";
 import type React from "react";
-import { Button, type ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils/ui";
 import type { Page, Post } from "@/payload-types";
+
+type ButtonProps = VariantProps<typeof buttonVariants>;
 
 interface CMSLinkType {
   appearance?: "inline" | ButtonProps["variant"];
@@ -45,7 +49,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     return null;
   }
 
-  const size = appearance === "link" ? "clear" : sizeFromProps;
+  const size = appearance === "link" ? undefined : sizeFromProps;
   const newTabProps = newTab
     ? { rel: "noopener noreferrer", target: "_blank" }
     : {};
