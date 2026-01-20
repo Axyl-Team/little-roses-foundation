@@ -33,6 +33,11 @@ export const env = createEnv({
       .min(1)
       .optional()
       .describe("Google Generative AI API key"),
+    DEEPINFRA_API_KEY: z
+      .string()
+      .min(1)
+      .optional()
+      .describe("DeepInfra API key"),
   },
   client: {
     // Used to configure CORS, format links and more. No trailing slash

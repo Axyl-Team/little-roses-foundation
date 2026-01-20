@@ -10,13 +10,22 @@ import {
 } from "@workspace/ui/components/dropdown-menu";
 import { MoreVertical, X } from "lucide-react";
 import { useState } from "react";
-import ChatBot from "@/components/chat-bot";
+import ChatBot from "@/components/ai/chat-bot";
 import { useRouter } from "@/i18n/navigation";
+import { cn } from "@/lib/utils/ui";
 
 export const Popup = () => {
   const [open, setOpen] = useState(false);
-  const [personaState, setPersonaState] = useState<PersonaState>("idle");
+  const [isTyping, setIsTyping] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
   const router = useRouter();
+
+  let personaState: PersonaState = "idle";
+  if (isThinking) {
+    personaState = "thinking";
+  } else if (isTyping) {
+    personaState = "listening";
+  }
 
   // The floating button only supports 2 visual states: idle + listening.
   const floatingPersonaState: PersonaState =
@@ -29,7 +38,10 @@ export const Popup = () => {
   return (
     <>
       <button
-        className={`fixed right-6 bottom-6 z-50 flex size-14 items-center justify-center rounded-full bg-[#226D4B] shadow-black/30 shadow-lg transition-opacity md:size-16 ${open ? "opacity-0 md:opacity-100" : ""}`}
+        className={cn(
+          "fixed right-6 bottom-6 z-50 hidden size-14 items-center justify-center rounded-full bg-[#226D4B] shadow-black/30 shadow-lg transition-opacity md:size-16 lg:flex",
+          open ? "opacity-0 md:opacity-100" : ""
+        )}
         onClick={handleTogglePopup}
         type="button"
       >
@@ -78,7 +90,7 @@ export const Popup = () => {
                       <DropdownMenuItem
                         onClick={() => {
                           setOpen(false);
-                          router.push("/ai");
+                          router.push("/chat-bot");
                         }}
                       >
                         Go to main chat page
@@ -98,14 +110,12 @@ export const Popup = () => {
               <div className="chat-scroll-container flex min-h-0 flex-1 flex-col p-4 sm:p-6">
                 <ChatBot
                   onStatusChange={(status) => {
-                    if (status === "streaming" || status === "submitted") {
-                      setPersonaState("thinking");
-                    } else if (status === "ready") {
-                      setPersonaState("idle");
-                    }
+                    setIsThinking(
+                      status === "streaming" || status === "submitted"
+                    );
                   }}
                   onTypingChange={(isTyping) => {
-                    setPersonaState(isTyping ? "listening" : "idle");
+                    setIsTyping(isTyping);
                   }}
                   variant="popup"
                 />

@@ -7,7 +7,7 @@ export const PopupWrapper = () => {
   const pathname = usePathname();
 
   // Only show popup when not on /ai page
-  if (pathname === "/ai") {
+  if (pathname === "/chat-bot") {
     return null;
   }
 

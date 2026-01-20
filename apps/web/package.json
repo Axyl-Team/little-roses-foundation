@@ -25,6 +25,7 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@ai-sdk/deepinfra": "^2.0.15",
     "@ai-sdk/google": "^3.0.10",
     "@ai-sdk/react": "^3.0.44",
     "@payloadcms/admin-bar": "3.72.0",
