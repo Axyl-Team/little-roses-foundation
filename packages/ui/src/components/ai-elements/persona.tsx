@@ -36,38 +36,32 @@ const stateMachine = "default";
 
 const sources = {
   obsidian: {
-    source:
-      "https://ejiidnob33g9ap1r.public.blob.vercel-storage.com/obsidian-2.0.riv",
+    source: "persona/obsidian-2.0.riv",
     dynamicColor: true,
     hasModel: true,
   },
   mana: {
-    source:
-      "https://ejiidnob33g9ap1r.public.blob.vercel-storage.com/mana-2.0.riv",
+    source: "persona/mana-2.0.riv",
     dynamicColor: false,
     hasModel: true,
   },
   opal: {
-    source:
-      "https://ejiidnob33g9ap1r.public.blob.vercel-storage.com/orb-1.2.riv",
+    source: "persona/orb-1.2.riv",
     dynamicColor: false,
     hasModel: false,
   },
   halo: {
-    source:
-      "https://ejiidnob33g9ap1r.public.blob.vercel-storage.com/halo-2.0.riv",
+    source: "persona/halo-2.0.riv",
     dynamicColor: true,
     hasModel: true,
   },
   glint: {
-    source:
-      "https://ejiidnob33g9ap1r.public.blob.vercel-storage.com/glint-2.0.riv",
+    source: "persona/glint-2.0.riv",
     dynamicColor: true,
     hasModel: true,
   },
   command: {
-    source:
-      "https://ejiidnob33g9ap1r.public.blob.vercel-storage.com/command-2.0.riv",
+    source: "persona/command-2.0.riv",
     dynamicColor: true,
     hasModel: true,
   },

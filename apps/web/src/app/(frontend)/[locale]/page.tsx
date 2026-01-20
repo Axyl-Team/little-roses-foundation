@@ -8,7 +8,8 @@ export default function Page() {
   return (
     <div className="flex flex-col gap-4">
       {t("title")}
-      <Link href="/test">test page</Link>{" "}
+      <Link href="/test">test page</Link>
+      <Link href="/ai">ai page</Link>
       <div>
         <Button disabled size={"sm"}>
           <Spinner className="size-4" />

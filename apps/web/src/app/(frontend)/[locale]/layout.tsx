@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { PopupWrapper } from "@/components/popup-wrapper";
 import { routing } from "@/i18n/routing";
 
 interface Props {
@@ -21,6 +22,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <PopupWrapper />
       {children}
     </NextIntlClientProvider>
   );
