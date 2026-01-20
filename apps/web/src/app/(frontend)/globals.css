@@ -1,1 +1,11 @@
 @import "@workspace/ui/globals.css";
+
+/* Hide scrollbars inside chatbot container while keeping scroll behavior */
+.chat-scroll-container * {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.chat-scroll-container *::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
