@@ -7,6 +7,7 @@
     "./components/*": "./src/components/*.tsx",
     "./lib/*": "./src/lib/*.ts",
     "./globals.css": "./src/styles/globals.css",
+    "./admin-fonts.scss": "./src/styles/admin-fonts.scss",
     "./postcss.config": "./postcss.config.mjs",
     "./hooks/*": "./src/hooks/*.ts"
   },

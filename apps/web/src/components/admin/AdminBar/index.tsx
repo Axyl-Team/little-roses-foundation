@@ -40,7 +40,7 @@ export const AdminBar: React.FC<{
   const [show, setShow] = useState(false);
   const collection = (
     collectionLabels[segments?.[1] as keyof typeof collectionLabels]
-      ? segments[1]
+      ? segments?.[1]
       : "posts"
   ) as keyof typeof collectionLabels;
   const router = useRouter();
