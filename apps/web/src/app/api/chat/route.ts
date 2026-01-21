@@ -36,9 +36,11 @@ export async function POST(req: Request) {
       tools: {
         ...(webSearch && {
           webSearch: tavilySearch({
+            searchDepth: "basic",
             maxResults: 5,
           }),
           webExtract: tavilyExtract({
+            searchDepth: "basic",
             maxResults: 5,
           }),
         }),
