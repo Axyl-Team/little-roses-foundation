@@ -6,11 +6,18 @@ import {
   ConversationScrollButton,
 } from "@workspace/ui/components/ai-elements/conversation";
 import type { PromptInputMessage } from "@workspace/ui/components/ai-elements/prompt-input";
+import { PromptSuggestion } from "@workspace/ui/components/ai-elements/suggestion";
 import { useEffect, useState } from "react";
 import { ChatInput } from "./chat-input";
 import { MessageList } from "./message-list";
 import { models } from "./models";
 import type { ChatBotProps, ChatStatus } from "./types";
+
+const suggestions = [
+  "what's the current date?",
+  "what time is it in Tokyo?",
+  "give me the current time in Europe/Paris",
+];
 
 const ChatBot = ({
   variant = "page",
@@ -82,6 +89,21 @@ const ChatBot = ({
         />
         <ConversationScrollButton />
       </Conversation>
+      {messages.length === 0 && (
+        <div className="flex flex-wrap gap-2">
+          {suggestions.map((suggestion) => (
+            <PromptSuggestion
+              key={suggestion}
+              onClick={() => {
+                handleSubmit({ text: suggestion, files: [] });
+              }}
+            >
+              {suggestion}
+            </PromptSuggestion>
+          ))}
+        </div>
+      )}
+
       <ChatInput
         error={error ?? null}
         input={input}

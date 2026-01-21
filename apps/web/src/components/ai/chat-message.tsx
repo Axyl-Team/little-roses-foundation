@@ -26,6 +26,7 @@ import {
 } from "@workspace/ui/components/ai-elements/sources";
 import type { UIMessage } from "ai";
 import { BrainIcon, CopyIcon, RefreshCcwIcon } from "lucide-react";
+import { renderDateTool, renderTimeTool } from "./tools";
 import type { ChatStatus } from "./types";
 
 interface ChatMessageProps {
@@ -117,6 +118,9 @@ export function ChatMessage({
           </ChainOfThoughtContent>
         </ChainOfThought>
       )}
+
+      {renderDateTool(message)}
+      {renderTimeTool(message)}
 
       {(fileParts.length > 0 || textParts.length > 0) && (
         <Message from={message.role}>

@@ -1,53 +1,118 @@
 "use client";
 
-import { Button } from "@workspace/ui/components/button";
-import { ScrollArea, ScrollBar } from "@workspace/ui/components/scroll-area";
+import { Button, type buttonVariants } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
-import type { ComponentProps } from "react";
+import type { VariantProps } from "class-variance-authority";
 
-export type SuggestionsProps = ComponentProps<typeof ScrollArea>;
+export type PromptSuggestionProps = {
+  children: React.ReactNode;
+  variant?: VariantProps<typeof buttonVariants>["variant"];
+  size?: VariantProps<typeof buttonVariants>["size"];
+  className?: string;
+  highlight?: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const Suggestions = ({
-  className,
+function PromptSuggestion({
   children,
-  ...props
-}: SuggestionsProps) => (
-  <ScrollArea className="w-full overflow-x-auto whitespace-nowrap" {...props}>
-    <div className={cn("flex w-max flex-nowrap items-center gap-2", className)}>
-      {children}
-    </div>
-    <ScrollBar className="hidden" orientation="horizontal" />
-  </ScrollArea>
-);
-
-export type SuggestionProps = Omit<ComponentProps<typeof Button>, "onClick"> & {
-  suggestion: string;
-  onClick?: (suggestion: string) => void;
-};
-
-export const Suggestion = ({
-  suggestion,
-  onClick,
+  variant,
+  size,
   className,
-  variant = "outline",
-  size = "sm",
-  children,
+  highlight,
   ...props
-}: SuggestionProps) => {
-  const handleClick = () => {
-    onClick?.(suggestion);
-  };
+}: PromptSuggestionProps) {
+  const isHighlightMode = highlight !== undefined && highlight.trim() !== "";
+  const content = typeof children === "string" ? children : "";
+
+  if (!isHighlightMode) {
+    return (
+      <Button
+        className={cn("rounded-full", className)}
+        size={size || "lg"}
+        variant={variant || "outline"}
+        {...props}
+      >
+        {children}
+      </Button>
+    );
+  }
+
+  if (!content) {
+    return (
+      <Button
+        className={cn(
+          "w-full cursor-pointer justify-start rounded-xl py-2",
+          "hover:bg-accent",
+          className
+        )}
+        size={size || "sm"}
+        variant={variant || "ghost"}
+        {...props}
+      >
+        {children}
+      </Button>
+    );
+  }
+
+  const trimmedHighlight = highlight.trim();
+  const contentLower = content.toLowerCase();
+  const highlightLower = trimmedHighlight.toLowerCase();
+  const shouldHighlight = contentLower.includes(highlightLower);
 
   return (
     <Button
-      className={cn("cursor-pointer rounded-full px-4", className)}
-      onClick={handleClick}
-      size={size}
-      type="button"
-      variant={variant}
+      className={cn(
+        "w-full cursor-pointer justify-start gap-0 rounded-xl py-2",
+        "hover:bg-accent",
+        className
+      )}
+      size={size || "sm"}
+      variant={variant || "ghost"}
       {...props}
     >
-      {children || suggestion}
+      {shouldHighlight ? (
+        (() => {
+          const index = contentLower.indexOf(highlightLower);
+          if (index === -1) {
+            return (
+              <span className="whitespace-pre-wrap text-muted-foreground">
+                {content}
+              </span>
+            );
+          }
+
+          const actualHighlightedText = content.substring(
+            index,
+            index + highlightLower.length
+          );
+
+          const before = content.substring(0, index);
+          const after = content.substring(index + actualHighlightedText.length);
+
+          return (
+            <>
+              {before && (
+                <span className="whitespace-pre-wrap text-muted-foreground">
+                  {before}
+                </span>
+              )}
+              <span className="whitespace-pre-wrap font-medium text-primary">
+                {actualHighlightedText}
+              </span>
+              {after && (
+                <span className="whitespace-pre-wrap text-muted-foreground">
+                  {after}
+                </span>
+              )}
+            </>
+          );
+        })()
+      ) : (
+        <span className="whitespace-pre-wrap text-muted-foreground">
+          {content}
+        </span>
+      )}
     </Button>
   );
-};
+}
+
+export { PromptSuggestion };
