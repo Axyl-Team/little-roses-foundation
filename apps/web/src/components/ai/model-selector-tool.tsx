@@ -12,6 +12,7 @@ import {
   ModelSelectorTrigger,
 } from "@workspace/ui/components/ai-elements/model-selector";
 import { Button } from "@workspace/ui/components/button";
+import { CheckIcon } from "lucide-react";
 import type { Model } from "./models";
 
 interface ModelSelectorToolProps {
@@ -70,6 +71,11 @@ export function ModelSelectorTool({
                         <ModelSelectorLogo key={provider} provider={provider} />
                       ))}
                     </ModelSelectorLogoGroup>
+                    {selectedModel === model.id ? (
+                      <CheckIcon className="ml-auto size-4" />
+                    ) : (
+                      <div className="ml-auto size-4" />
+                    )}
                   </ModelSelectorItem>
                 ))}
             </ModelSelectorGroup>
