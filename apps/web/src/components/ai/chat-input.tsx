@@ -66,7 +66,7 @@ export function ChatInput({
       <PromptInputFooter>
         <PromptInputTools>
           <PromptInputActionMenu>
-            <PromptInputActionMenuTrigger />
+            <PromptInputActionMenuTrigger disabled />
             <PromptInputActionMenuContent>
               <PromptInputActionAddAttachments />
             </PromptInputActionMenuContent>
@@ -74,6 +74,7 @@ export function ChatInput({
 
           {!isPopupVariant && (
             <PromptInputButton
+              disabled
               onClick={onWebSearchToggle}
               variant={webSearch ? "default" : "ghost"}
             >

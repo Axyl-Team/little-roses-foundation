@@ -2,6 +2,7 @@ import { ConversationContent } from "@workspace/ui/components/ai-elements/conver
 import { Loader } from "@workspace/ui/components/ai-elements/loader";
 import { SystemMessage } from "@workspace/ui/components/ai-elements/system-message";
 import type { UIMessage } from "ai";
+import { useRouter } from "@/i18n/navigation";
 import { ChatMessage } from "./chat-message";
 import type { ChatStatus } from "./types";
 
@@ -24,6 +25,8 @@ export function MessageList({
   webSearch,
   onRegenerate,
 }: MessageListProps) {
+  const router = useRouter();
+
   return (
     <ConversationContent>
       {messages.map((message, messageIndex) => (
@@ -43,13 +46,7 @@ export function MessageList({
         <SystemMessage
           cta={{
             label: "Retry",
-            onClick: () =>
-              onRegenerate({
-                body: {
-                  model: selectedModel,
-                  webSearch,
-                },
-              }),
+            onClick: () => router.refresh(),
           }}
           fill
           variant="error"

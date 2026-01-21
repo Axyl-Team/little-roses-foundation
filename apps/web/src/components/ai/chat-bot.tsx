@@ -26,7 +26,7 @@ const ChatBot = ({
     },
   });
   const [selectedModel, setSelectedModel] = useState<string>(
-    models[0]?.id || "meta-llama/Llama-3.3-70B-Instruct"
+    models[0]?.id || "openai/gpt-oss-120b"
   );
 
   useEffect(() => {

@@ -38,6 +38,11 @@ export const env = createEnv({
       .min(1)
       .optional()
       .describe("DeepInfra API key"),
+    OPENROUTER_API_KEY: z
+      .string()
+      .min(1)
+      .optional()
+      .describe("OpenRouter API key"),
   },
   client: {
     // Used to configure CORS, format links and more. No trailing slash

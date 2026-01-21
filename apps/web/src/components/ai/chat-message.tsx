@@ -1,4 +1,10 @@
 import {
+  ChainOfThought,
+  ChainOfThoughtContent,
+  ChainOfThoughtHeader,
+  ChainOfThoughtStep,
+} from "@workspace/ui/components/ai-elements/chain-of-thought";
+import {
   Message,
   MessageAction,
   MessageActions,
@@ -19,7 +25,7 @@ import {
   SourcesTrigger,
 } from "@workspace/ui/components/ai-elements/sources";
 import type { UIMessage } from "ai";
-import { CopyIcon, RefreshCcwIcon } from "lucide-react";
+import { BrainIcon, CopyIcon, RefreshCcwIcon } from "lucide-react";
 import type { ChatStatus } from "./types";
 
 interface ChatMessageProps {
@@ -48,6 +54,9 @@ export function ChatMessage({
   const sourceParts = message.parts.filter(
     (part) => part.type === "source-url"
   );
+  const reasoningParts = message.parts.filter(
+    (part) => part.type === "reasoning"
+  );
 
   const isLastMessage = messageIndex === totalMessages - 1;
   const isStreaming = status === "streaming";
@@ -65,25 +74,49 @@ export function ChatMessage({
         </Sources>
       )}
 
-      {message.parts.map((part, i) => {
-        switch (part.type) {
-          case "reasoning":
-            return (
-              <Reasoning
-                className="w-full"
-                isStreaming={
-                  isStreaming && i === message.parts.length - 1 && isLastMessage
-                }
-                key={`${message.id}-${i}`}
-              >
-                <ReasoningTrigger />
-                <ReasoningContent>{part.text}</ReasoningContent>
-              </Reasoning>
-            );
-          default:
-            return null;
-        }
-      })}
+      {reasoningParts.length === 1 && (
+        <Reasoning
+          className="w-full"
+          isStreaming={isStreaming && isLastMessage}
+        >
+          <ReasoningTrigger />
+          <ReasoningContent>{reasoningParts[0].text}</ReasoningContent>
+        </Reasoning>
+      )}
+
+      {reasoningParts.length > 1 && (
+        <ChainOfThought className="w-full" defaultOpen={false}>
+          <ChainOfThoughtHeader>
+            {`Reasoning (${reasoningParts.length} steps)`}
+          </ChainOfThoughtHeader>
+          <ChainOfThoughtContent className="mb-4">
+            {message.parts.map((part, i) => {
+              if (part.type === "reasoning") {
+                const stepIndex = reasoningParts.indexOf(part) + 1;
+                return (
+                  <ChainOfThoughtStep
+                    icon={BrainIcon}
+                    key={`${message.id}-${i}`}
+                    label={`Step ${stepIndex}`}
+                    status={
+                      isStreaming &&
+                      i === message.parts.length - 1 &&
+                      isLastMessage
+                        ? "active"
+                        : "complete"
+                    }
+                  >
+                    <div className="whitespace-pre-wrap text-muted-foreground text-xs">
+                      {part.text}
+                    </div>
+                  </ChainOfThoughtStep>
+                );
+              }
+              return null;
+            })}
+          </ChainOfThoughtContent>
+        </ChainOfThought>
+      )}
 
       {(fileParts.length > 0 || textParts.length > 0) && (
         <Message from={message.role}>
@@ -108,6 +141,7 @@ export function ChatMessage({
 
           {message.role === "assistant" &&
             isLastMessage &&
+            status === "ready" &&
             textParts.length > 0 && (
               <MessageActions>
                 <MessageAction

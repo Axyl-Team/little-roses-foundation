@@ -1,5 +1,5 @@
-import { createDeepInfra } from "@ai-sdk/deepinfra";
 import { type GoogleGenerativeAIProviderOptions, google } from "@ai-sdk/google";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import {
   convertToModelMessages,
   smoothStream,
@@ -7,12 +7,14 @@ import {
   streamText,
   type UIMessage,
 } from "ai";
+import { env } from "@/env";
+import { getCurrentDateTool, getTimeTool } from "@/lib/tool";
 
 // Allow streaming responses up to 60 seconds
 export const maxDuration = 60;
 
-const deepinfra = createDeepInfra({
-  baseURL: "https://openrouter.ai/api/v1/chat/completions",
+const openrouter = createOpenRouter({
+  apiKey: env.OPENROUTER_API_KEY,
 });
 
 export async function POST(req: Request) {
@@ -25,7 +27,7 @@ export async function POST(req: Request) {
 
   try {
     const result = streamText({
-      model: deepinfra(model),
+      model: openrouter(model),
       system: "You are a helpful assistant with access to tools.",
       messages: await convertToModelMessages(messages),
       stopWhen: stepCountIs(5),
@@ -37,11 +39,17 @@ export async function POST(req: Request) {
             includeThoughts: true,
           },
         } satisfies GoogleGenerativeAIProviderOptions,
+        openRouter: {
+          webSearch: true,
+          reasoningSummary: "auto",
+        },
       },
       tools: {
         ...(webSearch && {
           google_search: google.tools.googleSearch({}),
         }),
+        getTime: getTimeTool,
+        getCurrentDate: getCurrentDateTool,
       },
     });
 

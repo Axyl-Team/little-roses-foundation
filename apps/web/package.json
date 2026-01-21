@@ -28,6 +28,7 @@
     "@ai-sdk/deepinfra": "^2.0.15",
     "@ai-sdk/google": "^3.0.10",
     "@ai-sdk/react": "^3.0.44",
+    "@openrouter/ai-sdk-provider": "^2.0.0",
     "@payloadcms/admin-bar": "3.72.0",
     "@payloadcms/db-postgres": "3.72.0",
     "@payloadcms/live-preview-react": "3.72.0",
