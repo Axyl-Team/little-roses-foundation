@@ -20,12 +20,12 @@ import {
 } from "@workspace/ui/components/ai-elements/reasoning";
 import {
   Source,
-  Sources,
-  SourcesContent,
-  SourcesTrigger,
+  SourceContent,
+  SourceTrigger,
 } from "@workspace/ui/components/ai-elements/sources";
 import type { UIMessage } from "ai";
 import { BrainIcon, CopyIcon, RefreshCcwIcon } from "lucide-react";
+import { cn } from "@/lib/utils/ui";
 import { renderDateTool, renderTimeTool } from "./tools";
 import type { ChatStatus } from "./types";
 
@@ -64,17 +64,6 @@ export function ChatMessage({
 
   return (
     <div key={message.id}>
-      {message.role === "assistant" && sourceParts.length > 0 && (
-        <Sources>
-          <SourcesTrigger count={sourceParts.length} />
-          {sourceParts.map((part) => (
-            <SourcesContent key={part.url}>
-              <Source href={part.url} title={part.title} />
-            </SourcesContent>
-          ))}
-        </Sources>
-      )}
-
       {reasoningParts.length === 1 && (
         <Reasoning
           className="w-full"
@@ -121,6 +110,24 @@ export function ChatMessage({
 
       {renderDateTool(message)}
       {renderTimeTool(message)}
+
+      <div
+        className={cn(
+          "flex flex-wrap justify-center gap-2",
+          sourceParts.length && "mb-2"
+        )}
+      >
+        {message.role === "assistant" && sourceParts.length > 0 && (
+          <div>
+            {sourceParts.map((part) => (
+              <Source href={part.url} key={part.url}>
+                <SourceTrigger showFavicon />
+                <SourceContent description={""} title={part.title || ""} />
+              </Source>
+            ))}
+          </div>
+        )}
+      </div>
 
       {(fileParts.length > 0 || textParts.length > 0) && (
         <Message from={message.role}>

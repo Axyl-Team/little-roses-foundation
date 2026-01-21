@@ -20,6 +20,21 @@ const nextConfig: NextConfig = {
           protocol: url.protocol.replace(":", "") as "http" | "https",
         };
       }),
+      // Google favicon service
+      {
+        protocol: "https",
+        hostname: "**.gstatic.com",
+      },
+      // Google Cloud services
+      {
+        protocol: "https",
+        hostname: "**.cloud.google.com",
+      },
+      // Common external image sources
+      {
+        protocol: "https",
+        hostname: "**.googleusercontent.com",
+      },
     ],
   },
   reactStrictMode: true,

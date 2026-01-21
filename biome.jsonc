@@ -1,4 +1,23 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["ultracite/core", "ultracite/next", "ultracite/react"]
+  "extends": ["ultracite/core", "ultracite/next", "ultracite/react"],
+  // Skip linting and formatting for auto-generated files
+  "overrides": [
+    {
+      "includes": [
+        // Payload CMS auto-generated files
+        "**/payload-types.ts",
+        "**/importMap.js",
+        // Generic auto-generated file patterns
+        "**/*.gen.ts",
+        "**/*.generated.ts"
+      ],
+      "linter": {
+        "enabled": false
+      },
+      "formatter": {
+        "enabled": false
+      }
+    }
+  ]
 }

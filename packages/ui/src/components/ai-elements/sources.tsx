@@ -1,77 +1,136 @@
 "use client";
 
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@workspace/ui/components/collapsible";
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@workspace/ui/components/hover-card";
 import { cn } from "@workspace/ui/lib/utils";
-import { BookIcon, ChevronDownIcon } from "lucide-react";
-import type { ComponentProps } from "react";
+import Image from "next/image";
+import { createContext, useContext } from "react";
 
-export type SourcesProps = ComponentProps<"div">;
+const SourceContext = createContext<{
+  href: string;
+  domain: string;
+} | null>(null);
 
-export const Sources = ({ className, ...props }: SourcesProps) => (
-  <Collapsible
-    className={cn("not-prose mb-4 text-primary text-xs", className)}
-    {...props}
-  />
-);
+function useSourceContext() {
+  const ctx = useContext(SourceContext);
+  if (!ctx) {
+    throw new Error("Source.* must be used inside <Source>");
+  }
+  return ctx;
+}
 
-export type SourcesTriggerProps = ComponentProps<typeof CollapsibleTrigger> & {
-  count: number;
-};
+export interface SourceProps {
+  href: string;
+  children: React.ReactNode;
+}
 
-export const SourcesTrigger = ({
+export function Source({ href, children }: SourceProps) {
+  let domain = "";
+  try {
+    domain = new URL(href).hostname;
+  } catch {
+    domain = href.split("/").pop() || href;
+  }
+
+  return (
+    <SourceContext.Provider value={{ href, domain }}>
+      <HoverCard closeDelay={0} openDelay={150}>
+        {children}
+      </HoverCard>
+    </SourceContext.Provider>
+  );
+}
+
+export interface SourceTriggerProps {
+  label?: string | number;
+  showFavicon?: boolean;
+  className?: string;
+}
+
+export function SourceTrigger({
+  label,
+  showFavicon = false,
   className,
-  count,
-  children,
-  ...props
-}: SourcesTriggerProps) => (
-  <CollapsibleTrigger
-    className={cn("flex items-center gap-2", className)}
-    {...props}
-  >
-    {children ?? (
-      <>
-        <p className="font-medium">Used {count} sources</p>
-        <ChevronDownIcon className="h-4 w-4" />
-      </>
-    )}
-  </CollapsibleTrigger>
-);
+}: SourceTriggerProps) {
+  const { href, domain } = useSourceContext();
+  const labelToShow = label ?? domain.replace("www.", "");
 
-export type SourcesContentProps = ComponentProps<typeof CollapsibleContent>;
+  return (
+    <HoverCardTrigger asChild>
+      <a
+        className={cn(
+          "inline-flex h-5 max-w-32 items-center gap-1 overflow-hidden rounded-full bg-muted py-0 text-muted-foreground text-xs no-underline transition-colors duration-150 hover:bg-muted-foreground/30 hover:text-primary",
+          showFavicon ? "pr-2 pl-1" : "px-1",
+          className
+        )}
+        href={href}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {showFavicon && (
+          <Image
+            alt="favicon"
+            className="size-3.5 rounded-full"
+            height={14}
+            src={`https://www.google.com/s2/favicons?sz=64&domain_url=${encodeURIComponent(
+              href
+            )}`}
+            unoptimized
+            width={14}
+          />
+        )}
+        <span className="truncate text-center font-normal tabular-nums">
+          {labelToShow}
+        </span>
+      </a>
+    </HoverCardTrigger>
+  );
+}
 
-export const SourcesContent = ({
+export interface SourceContentProps {
+  title: string;
+  description: string;
+  className?: string;
+}
+
+export function SourceContent({
+  title,
+  description,
   className,
-  ...props
-}: SourcesContentProps) => (
-  <CollapsibleContent
-    className={cn(
-      "mt-3 flex w-fit flex-col gap-2",
-      "data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2 outline-none data-[state=closed]:animate-out data-[state=open]:animate-in",
-      className
-    )}
-    {...props}
-  />
-);
+}: SourceContentProps) {
+  const { href, domain } = useSourceContext();
 
-export type SourceProps = ComponentProps<"a">;
-
-export const Source = ({ href, title, children, ...props }: SourceProps) => (
-  <a
-    className="flex items-center gap-2"
-    href={href}
-    rel="noreferrer"
-    target="_blank"
-    {...props}
-  >
-    {children ?? (
-      <>
-        <BookIcon className="h-4 w-4" />
-        <span className="block font-medium">{title}</span>
-      </>
-    )}
-  </a>
-);
+  return (
+    <HoverCardContent className={cn("w-80 p-0 shadow-xs", className)}>
+      <a
+        className="flex flex-col gap-2 p-3"
+        href={href}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div className="flex items-center gap-1.5">
+          <Image
+            alt="favicon"
+            className="size-4 rounded-full"
+            height={16}
+            src={`https://www.google.com/s2/favicons?sz=64&domain_url=${encodeURIComponent(
+              href
+            )}`}
+            unoptimized
+            width={16}
+          />
+          <div className="truncate text-primary text-sm">
+            {domain.replace("www.", "")}
+          </div>
+        </div>
+        <div className="line-clamp-2 font-medium text-sm">{title}</div>
+        <div className="line-clamp-2 text-muted-foreground text-sm">
+          {description}
+        </div>
+      </a>
+    </HoverCardContent>
+  );
+}
