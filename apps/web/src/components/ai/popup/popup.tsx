@@ -10,15 +10,21 @@ import {
 } from "@workspace/ui/components/dropdown-menu";
 import { MoreVertical, X } from "lucide-react";
 import { useState } from "react";
-import ChatBot from "@/components/ai/chat-bot";
-import { useRouter } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils/ui";
+import ChatBot from "../core/chat-bot";
 
 export const Popup = () => {
+  const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
-  const router = useRouter();
+
+  // Only show popup when not on /chat-bot page
+  if (pathname === "/chat-bot") {
+    return null;
+  }
 
   let personaState: PersonaState = "idle";
   if (isThinking) {
@@ -117,7 +123,6 @@ export const Popup = () => {
                   onTypingChange={(isTyping) => {
                     setIsTyping(isTyping);
                   }}
-                  variant="popup"
                 />
               </div>
             </div>

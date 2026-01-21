@@ -1020,6 +1020,7 @@ export const PromptInputActionMenuItem = ({
 
 export type PromptInputSubmitProps = ComponentProps<typeof InputGroupButton> & {
   status?: ChatStatus;
+  onStop?: () => void;
 };
 
 export const PromptInputSubmit = ({
@@ -1028,6 +1029,7 @@ export const PromptInputSubmit = ({
   size = "icon-sm",
   status,
   children,
+  onStop,
   ...props
 }: PromptInputSubmitProps) => {
   let Icon = <CornerDownLeftIcon className="size-4" />;
@@ -1040,10 +1042,19 @@ export const PromptInputSubmit = ({
     Icon = <XIcon className="size-4" />;
   }
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (status === "streaming" && onStop) {
+      e.preventDefault();
+      onStop();
+    }
+    // If not streaming, allow normal form submission
+  };
+
   return (
     <InputGroupButton
-      aria-label="Submit"
+      aria-label={status === "streaming" ? "Stop" : "Submit"}
       className={cn(className)}
+      onClick={handleClick}
       size={size}
       type="submit"
       variant={variant}

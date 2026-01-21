@@ -2,8 +2,8 @@ import { ConversationContent } from "@workspace/ui/components/ai-elements/conver
 import { Loader } from "@workspace/ui/components/ai-elements/loader";
 import { SystemMessage } from "@workspace/ui/components/ai-elements/system-message";
 import type { UIMessage } from "ai";
+import type { ChatStatus } from "../types";
 import { ChatMessage } from "./chat-message";
-import type { ChatStatus } from "./types";
 
 interface MessageListProps {
   messages: UIMessage[];

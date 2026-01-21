@@ -25,9 +25,10 @@ import {
 } from "@workspace/ui/components/ai-elements/sources";
 import type { UIMessage } from "ai";
 import { BrainIcon, CopyIcon, RefreshCcwIcon } from "lucide-react";
+import { useEffect, useState } from "react"; // Thêm import này
 import { cn } from "@/lib/utils/ui";
-import { renderDateTool, renderTimeTool } from "./tools";
-import type { ChatStatus } from "./types";
+import { renderDateTool, renderTimeTool } from "../tools";
+import type { ChatStatus } from "../types";
 
 interface ChatMessageProps {
   message: UIMessage;
@@ -62,19 +63,37 @@ export function ChatMessage({
   const isLastMessage = messageIndex === totalMessages - 1;
   const isStreaming = status === "streaming";
 
+  const [showChainOfThought, setShowChainOfThought] = useState(false);
+
+  const isDoneAndHasMultipleSteps = !isStreaming && reasoningParts.length > 1;
+
+  useEffect(() => {
+    if (isDoneAndHasMultipleSteps) {
+      const timer = setTimeout(() => {
+        setShowChainOfThought(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+    setShowChainOfThought(false);
+  }, [isDoneAndHasMultipleSteps]);
+
+  const showReasoning = reasoningParts.length > 0 && !showChainOfThought;
+
+  const activeReasoningText = reasoningParts[reasoningParts.length - 1]?.text;
+
   return (
     <div key={message.id}>
-      {reasoningParts.length === 1 && (
+      {showReasoning && (
         <Reasoning
           className="w-full"
           isStreaming={isStreaming && isLastMessage}
         >
           <ReasoningTrigger />
-          <ReasoningContent>{reasoningParts[0].text}</ReasoningContent>
+          <ReasoningContent>{activeReasoningText}</ReasoningContent>
         </Reasoning>
       )}
 
-      {reasoningParts.length > 1 && (
+      {showChainOfThought && (
         <ChainOfThought className="w-full" defaultOpen={false}>
           <ChainOfThoughtHeader>
             {`Reasoning (${reasoningParts.length} steps)`}
@@ -88,13 +107,7 @@ export function ChatMessage({
                     icon={BrainIcon}
                     key={`${message.id}-${i}`}
                     label={`Step ${stepIndex}`}
-                    status={
-                      isStreaming &&
-                      i === message.parts.length - 1 &&
-                      isLastMessage
-                        ? "active"
-                        : "complete"
-                    }
+                    status="complete"
                   >
                     <div className="whitespace-pre-wrap text-muted-foreground text-xs">
                       {part.text}

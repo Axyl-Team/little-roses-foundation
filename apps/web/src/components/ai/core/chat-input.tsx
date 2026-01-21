@@ -18,8 +18,8 @@ import {
 import type { ChatStatus } from "ai";
 import { GlobeIcon } from "lucide-react";
 import { useState } from "react";
-import { ModelSelectorTool } from "./model-selector-tool";
-import type { Model } from "./models";
+import { ChatModelSelector } from "../model-selector";
+import type { Model } from "../models";
 
 interface ChatInputProps {
   input: string;
@@ -28,11 +28,11 @@ interface ChatInputProps {
   status: ChatStatus;
   models: Model[];
   selectedModel: string;
-  isPopupVariant: boolean;
   onInputChange: (value: string) => void;
   onSubmit: (message: PromptInputMessage) => void;
   onWebSearchToggle: () => void;
   onModelSelect: (modelId: string) => void;
+  onStop: () => void;
 }
 
 export function ChatInput({
@@ -42,11 +42,11 @@ export function ChatInput({
   status,
   models,
   selectedModel,
-  isPopupVariant,
   onInputChange,
   onSubmit,
   onWebSearchToggle,
   onModelSelect,
+  onStop,
 }: ChatInputProps) {
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
 
@@ -72,18 +72,15 @@ export function ChatInput({
             </PromptInputActionMenuContent>
           </PromptInputActionMenu>
 
-          {!isPopupVariant && (
-            <PromptInputButton
-              disabled
-              onClick={onWebSearchToggle}
-              variant={webSearch ? "default" : "ghost"}
-            >
-              <GlobeIcon size={16} />
-              <span className="hidden sm:block">Search</span>
-            </PromptInputButton>
-          )}
+          <PromptInputButton
+            onClick={onWebSearchToggle}
+            variant={webSearch ? "default" : "ghost"}
+          >
+            <GlobeIcon size={16} />
+            <span className="hidden sm:block">Search</span>
+          </PromptInputButton>
 
-          <ModelSelectorTool
+          <ChatModelSelector
             models={models}
             onModelSelect={onModelSelect}
             onOpenChange={setModelSelectorOpen}
@@ -93,6 +90,7 @@ export function ChatInput({
         </PromptInputTools>
         <PromptInputSubmit
           disabled={!(input || status) || error != null}
+          onStop={onStop}
           status={status}
         />
       </PromptInputFooter>

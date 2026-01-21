@@ -1,5 +1,5 @@
-import { type GoogleGenerativeAIProviderOptions, google } from "@ai-sdk/google";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { tavilyExtract, tavilySearch } from "@tavily/ai-sdk";
 import {
   convertToModelMessages,
   smoothStream,
@@ -10,8 +10,8 @@ import {
 import { env } from "@/env";
 import { getCurrentDateTool, getTimeTool } from "@/lib/tool";
 
-// Allow streaming responses up to 60 seconds
-export const maxDuration = 60;
+// Allow streaming responses up to 300 seconds
+export const maxDuration = 300;
 
 const openrouter = createOpenRouter({
   apiKey: env.OPENROUTER_API_KEY,
@@ -31,23 +31,16 @@ export async function POST(req: Request) {
       model: openrouter(model),
       system: "You are a helpful assistant with access to tools.",
       messages: await convertToModelMessages(messages),
-      stopWhen: stepCountIs(5),
+      stopWhen: stepCountIs(15),
       experimental_transform: smoothStream(),
-      providerOptions: {
-        google: {
-          thinkingConfig: {
-            thinkingBudget: webSearch ? 2048 : 4096,
-            includeThoughts: true,
-          },
-        } satisfies GoogleGenerativeAIProviderOptions,
-        openRouter: {
-          webSearch: true,
-          reasoningSummary: "auto",
-        },
-      },
       tools: {
         ...(webSearch && {
-          google_search: google.tools.googleSearch({}),
+          webSearch: tavilySearch({
+            maxResults: 5,
+          }),
+          webExtract: tavilyExtract({
+            maxResults: 5,
+          }),
         }),
         getTime: getTimeTool,
         getCurrentDate: getCurrentDateTool,

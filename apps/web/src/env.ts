@@ -28,21 +28,12 @@ export const env = createEnv({
       .describe("Secret key for validating preview requests"),
     // Vercel production URL (auto-set by Vercel)
     VERCEL_PROJECT_PRODUCTION_URL: z.string().optional(),
-    GOOGLE_GENERATIVE_AI_API_KEY: z
-      .string()
-      .min(1)
-      .optional()
-      .describe("Google Generative AI API key"),
-    DEEPINFRA_API_KEY: z
-      .string()
-      .min(1)
-      .optional()
-      .describe("DeepInfra API key"),
     OPENROUTER_API_KEY: z
       .string()
       .min(1)
       .optional()
       .describe("OpenRouter API key"),
+    TAVILY_API_KEY: z.string().min(1).optional().describe("Tavily API key"),
   },
   client: {
     // Used to configure CORS, format links and more. No trailing slash

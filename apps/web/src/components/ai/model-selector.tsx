@@ -15,7 +15,7 @@ import { Button } from "@workspace/ui/components/button";
 import { CheckIcon } from "lucide-react";
 import type { Model } from "./models";
 
-interface ModelSelectorToolProps {
+interface ChatModelSelectorProps {
   models: Model[];
   selectedModel: string;
   open: boolean;
@@ -23,13 +23,13 @@ interface ModelSelectorToolProps {
   onModelSelect: (modelId: string) => void;
 }
 
-export function ModelSelectorTool({
+export function ChatModelSelector({
   models,
   selectedModel,
   open,
   onOpenChange,
   onModelSelect,
-}: ModelSelectorToolProps) {
+}: ChatModelSelectorProps) {
   const selectedModelData = models.find((model) => model.id === selectedModel);
   const chefs = Array.from(new Set(models.map((model) => model.chef)));
 
