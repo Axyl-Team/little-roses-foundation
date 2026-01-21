@@ -17,13 +17,14 @@ const openrouter = createOpenRouter({
   apiKey: env.OPENROUTER_API_KEY,
 });
 
+interface ChatRequest {
+  messages: UIMessage[];
+  webSearch: boolean;
+  model: string;
+}
+
 export async function POST(req: Request) {
-  const {
-    messages,
-    webSearch,
-    model,
-  }: { messages: UIMessage[]; webSearch: boolean; model: string } =
-    await req.json();
+  const { messages, webSearch, model }: ChatRequest = await req.json();
 
   try {
     const result = streamText({
