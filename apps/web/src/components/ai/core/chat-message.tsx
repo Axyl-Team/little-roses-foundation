@@ -1,146 +1,53 @@
 import {
-  ChainOfThought,
-  ChainOfThoughtContent,
-  ChainOfThoughtHeader,
-  ChainOfThoughtStep,
-} from "@workspace/ui/components/ai-elements/chain-of-thought";
-import {
   Message,
-  MessageAction,
-  MessageActions,
   MessageAttachment,
   MessageAttachments,
   MessageContent,
   MessageResponse,
 } from "@workspace/ui/components/ai-elements/message";
-import {
-  Reasoning,
-  ReasoningContent,
-  ReasoningTrigger,
-} from "@workspace/ui/components/ai-elements/reasoning";
-import {
-  Source,
-  SourceContent,
-  SourceTrigger,
-} from "@workspace/ui/components/ai-elements/sources";
 import type { UIMessage } from "ai";
-import { BrainIcon, CopyIcon, RefreshCcwIcon } from "lucide-react";
-import { useEffect, useState } from "react"; // Thêm import này
-import { cn } from "@/lib/utils/ui";
 import { renderDateTool, renderTimeTool } from "../tools";
-import type { ChatStatus } from "../types";
+import { MessageActionsBar } from "./message-actions-bar";
+import { MessageReasoning } from "./message-reasoning";
+import { MessageSources } from "./message-sources";
 
 interface ChatMessageProps {
   message: UIMessage;
-  messageIndex: number;
-  totalMessages: number;
-  status: ChatStatus;
-  selectedModel: string;
-  webSearch: boolean;
-  onRegenerate: (options: {
-    body: { model: string; webSearch: boolean };
-  }) => void;
+  isLastMessage: boolean;
+  isStreaming: boolean;
+  isReady: boolean;
+  onRegenerate: () => void;
 }
 
 export function ChatMessage({
   message,
-  messageIndex,
-  totalMessages,
-  status,
-  selectedModel,
-  webSearch,
+  isLastMessage,
+  isStreaming,
+  isReady,
   onRegenerate,
 }: ChatMessageProps) {
   const fileParts = message.parts.filter((part) => part.type === "file");
   const textParts = message.parts.filter((part) => part.type === "text");
-  const sourceParts = message.parts.filter(
-    (part) => part.type === "source-url"
-  );
-  const reasoningParts = message.parts.filter(
-    (part) => part.type === "reasoning"
-  );
+  const textContent = textParts.map((part) => part.text).join(" ");
 
-  const isLastMessage = messageIndex === totalMessages - 1;
-  const isStreaming = status === "streaming";
-
-  const [showChainOfThought, setShowChainOfThought] = useState(false);
-
-  const isDoneAndHasMultipleSteps = !isStreaming && reasoningParts.length > 1;
-
-  useEffect(() => {
-    if (isDoneAndHasMultipleSteps) {
-      const timer = setTimeout(() => {
-        setShowChainOfThought(true);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-    setShowChainOfThought(false);
-  }, [isDoneAndHasMultipleSteps]);
-
-  const showReasoning = reasoningParts.length > 0 && !showChainOfThought;
-
-  const activeReasoningText = reasoningParts[reasoningParts.length - 1]?.text;
+  const showActions =
+    message.role === "assistant" &&
+    isLastMessage &&
+    isReady &&
+    textParts.length > 0;
 
   return (
     <div key={message.id}>
-      {showReasoning && (
-        <Reasoning
-          className="w-full"
-          isStreaming={isStreaming && isLastMessage}
-        >
-          <ReasoningTrigger />
-          <ReasoningContent>{activeReasoningText}</ReasoningContent>
-        </Reasoning>
-      )}
-
-      {showChainOfThought && (
-        <ChainOfThought className="w-full" defaultOpen={false}>
-          <ChainOfThoughtHeader>
-            {`Reasoning (${reasoningParts.length} steps)`}
-          </ChainOfThoughtHeader>
-          <ChainOfThoughtContent className="mb-4">
-            {message.parts.map((part, i) => {
-              if (part.type === "reasoning") {
-                const stepIndex = reasoningParts.indexOf(part) + 1;
-                return (
-                  <ChainOfThoughtStep
-                    icon={BrainIcon}
-                    key={`${message.id}-${i}`}
-                    label={`Step ${stepIndex}`}
-                    status="complete"
-                  >
-                    <div className="whitespace-pre-wrap text-muted-foreground text-xs">
-                      {part.text}
-                    </div>
-                  </ChainOfThoughtStep>
-                );
-              }
-              return null;
-            })}
-          </ChainOfThoughtContent>
-        </ChainOfThought>
-      )}
+      <MessageReasoning
+        isLastMessage={isLastMessage}
+        isStreaming={isStreaming}
+        message={message}
+      />
 
       {renderDateTool(message)}
       {renderTimeTool(message)}
 
-      <div
-        className={cn(
-          "flex flex-wrap justify-center gap-2",
-          sourceParts.length && "mb-2"
-        )}
-      >
-        {message.role === "assistant" && sourceParts.length > 0 && (
-          <div>
-            {sourceParts.map((part) => (
-              <Source href={part.url} key={part.url}>
-                <SourceTrigger showFavicon />
-                <SourceContent description={""} title={part.title || ""} />
-              </Source>
-            ))}
-          </div>
-        )}
-      </div>
+      <MessageSources message={message} />
 
       {(fileParts.length > 0 || textParts.length > 0) && (
         <Message from={message.role}>
@@ -157,42 +64,16 @@ export function ChatMessage({
 
           {textParts.length > 0 && (
             <MessageContent>
-              <MessageResponse>
-                {textParts.map((part) => part.text).join(" ")}
-              </MessageResponse>
+              <MessageResponse>{textContent}</MessageResponse>
             </MessageContent>
           )}
 
-          {message.role === "assistant" &&
-            isLastMessage &&
-            status === "ready" &&
-            textParts.length > 0 && (
-              <MessageActions>
-                <MessageAction
-                  label="Retry"
-                  onClick={() =>
-                    onRegenerate({
-                      body: {
-                        model: selectedModel,
-                        webSearch,
-                      },
-                    })
-                  }
-                >
-                  <RefreshCcwIcon className="size-3" />
-                </MessageAction>
-                <MessageAction
-                  label="Copy"
-                  onClick={() =>
-                    navigator.clipboard.writeText(
-                      textParts.map((part) => part.text).join(" ")
-                    )
-                  }
-                >
-                  <CopyIcon className="size-3" />
-                </MessageAction>
-              </MessageActions>
-            )}
+          {showActions && (
+            <MessageActionsBar
+              onRegenerate={onRegenerate}
+              textContent={textContent}
+            />
+          )}
         </Message>
       )}
     </div>

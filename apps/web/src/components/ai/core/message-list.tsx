@@ -9,35 +9,34 @@ interface MessageListProps {
   messages: UIMessage[];
   status: ChatStatus;
   error: Error | null | undefined;
-  selectedModel: string;
-  webSearch: boolean;
-  onRegenerate: (options: {
-    body: { model: string; webSearch: boolean };
-  }) => void;
+  onRegenerate: () => void;
 }
 
 export function MessageList({
   messages,
   status,
   error,
-  selectedModel,
-  webSearch,
   onRegenerate,
 }: MessageListProps) {
+  const isStreaming = status === "streaming";
+  const isReady = status === "ready";
+
   return (
     <ConversationContent>
-      {messages.map((message, messageIndex) => (
-        <ChatMessage
-          key={message.id}
-          message={message}
-          messageIndex={messageIndex}
-          onRegenerate={onRegenerate}
-          selectedModel={selectedModel}
-          status={(status === "error" ? "idle" : status) as ChatStatus}
-          totalMessages={messages.length}
-          webSearch={webSearch}
-        />
-      ))}
+      {messages.map((message, messageIndex) => {
+        const isLastMessage = messageIndex === messages.length - 1;
+
+        return (
+          <ChatMessage
+            isLastMessage={isLastMessage}
+            isReady={isReady}
+            isStreaming={isStreaming}
+            key={message.id}
+            message={message}
+            onRegenerate={onRegenerate}
+          />
+        );
+      })}
 
       {error && (
         <SystemMessage

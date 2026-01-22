@@ -64,10 +64,13 @@ const ChatBot = ({ onStatusChange, onTypingChange }: ChatBotProps) => {
     onTypingChange?.(value.trim().length > 0);
   };
 
-  const handleRegenerate = (options: {
-    body: { model: string; webSearch: boolean };
-  }) => {
-    regenerate(options);
+  const handleRegenerate = () => {
+    regenerate({
+      body: {
+        model: selectedModel,
+        webSearch,
+      },
+    });
   };
 
   return (
@@ -77,9 +80,7 @@ const ChatBot = ({ onStatusChange, onTypingChange }: ChatBotProps) => {
           error={error ?? null}
           messages={messages}
           onRegenerate={handleRegenerate}
-          selectedModel={selectedModel}
           status={status as ChatStatus}
-          webSearch={webSearch}
         />
         <ConversationScrollButton />
       </Conversation>
